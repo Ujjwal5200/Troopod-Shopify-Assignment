@@ -1,0 +1,16 @@
+<div class="product-card">
+  {% if product.featured_image %}
+    <a href="{{ product.url }}" class="card-image">
+      <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+    </a>
+  {% else %}
+    <div class="card-image no-image">No image available</div>
+  {% endif %}
+  <h4><a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a></h4>
+  {% if product.available %}
+    <div class="pr"><strong>{{ product.price | money }}</strong>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s><em>{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round }}% off</em>{% endif %}</div>
+    <a href="{{ product.url }}" class="btn btn-ghost btn-sm">Add to cart</a>
+  {% else %}
+    <div class="sold-out">Sold out</div>
+  {% endif %}
+</div>

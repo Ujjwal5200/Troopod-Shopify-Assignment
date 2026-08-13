@@ -1,0 +1,29 @@
+<section class="sec" id="shop">
+  <div class="wrap">
+    <div class="panel-head rv">
+      <span class="kicker">Bestsellers</span>
+      <h2 class="d2" style="margin-top:12px">Loved by 30,000 homes</h2>
+      <div class="rule"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg><i></i></div>
+    </div>
+    {% assign products = collections[section.settings.collection].products %}
+    {% if products.size > 0 %}
+      <div class="shelf">
+        {% for product in products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="text-align:center;color:var(--paper-2);padding:40px 0">Select a collection in the theme editor to display products.</p>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Product Grid",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 12, "step": 1, "label": "Products to show", "default": 8 }
+  ],
+  "presets": [{ "name": "Product Grid" }]
+}
+{% endschema %}

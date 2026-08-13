@@ -1,0 +1,47 @@
+<section class="revband" id="reviews">
+  <div class="wrap">
+    <div class="revhead rv">
+      <span class="kicker">That's what they said</span>
+      <span class="agg"><span class="st">★★★★★</span> <b>4.8</b> from 8,000+ reviews</span>
+      <span class="agg">Loved by <b>12 lakh+</b> homes</span>
+    </div>
+  </div>
+  {% if section.blocks.size > 0 %}
+    <div class="revrail rv" aria-label="Customer reviews">
+      <div class="revtrack">
+        {% for block in section.blocks %}
+          <article class="glass-2 rcard">
+            <div class="st">★★★★★</div>
+            <h5>{{ block.settings.title | escape }}</h5>
+            <p>{{ block.settings.text | escape }}</p>
+            <div class="who">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+              <b>{{ block.settings.reviewer | escape }}</b>
+              {% if block.settings.product != blank %}
+                <span>&middot; {{ block.settings.product.title | escape }}</span>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Reviews Rail",
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "reviewer", "label": "Reviewer name", "default": "Anita" },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Works like a charm" },
+        { "type": "textarea", "id": "text", "label": "Review text", "default": "Finally an eco option that cleans as well as the chemical detergent I used for years." },
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Reviews Rail" }]
+}
+{% endschema %}

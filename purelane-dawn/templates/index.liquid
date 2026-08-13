@@ -1,0 +1,45 @@
+{% schema %}
+{
+  "name": "Homepage",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Hero",
+      "limit": 1
+    },
+    {
+      "type": "product_grid",
+      "name": "Product Grid",
+      "limit": 1
+    },
+    {
+      "type": "combos",
+      "name": "Combos",
+      "limit": 1
+    },
+    {
+      "type": "bundles",
+      "name": "Bundles",
+      "limit": 1
+    },
+    {
+      "type": "reviews",
+      "name": "Reviews",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Homepage",
+      "blocks": [
+        { "type": "hero" },
+        { "type": "product_grid" },
+        { "type": "combos" },
+        { "type": "bundles" },
+        { "type": "reviews" }
+      ]
+    }
+  ]
+}
+{% endschema %}

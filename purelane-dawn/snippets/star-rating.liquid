@@ -1,0 +1,7 @@
+{% assign rating = rating | plus: 0 %}
+{% if rating > 0 %}
+  <span class="star-rating" aria-label="{{ rating }} out of 5 stars">
+    {% for i in (1..rating) %}★{% endfor %}
+    {% if rating < 5 %}{% for i in (rating | plus: 1..5) %}☆{% endfor %}{% endif %}
+  </span>
+{% endif %}

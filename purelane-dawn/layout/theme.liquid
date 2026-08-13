@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }}</title>
+  {{ content_for_header }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {{ 'purelane.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  {% section 'header' %}
+  <main>
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'hero' %}
+          {% section 'hero' %}
+        {% when 'product_grid' %}
+          {% section 'product-grid' %}
+        {% when 'combos' %}
+          {% section 'combos' %}
+        {% when 'bundles' %}
+          {% section 'bundles' %}
+        {% when 'reviews' %}
+          {% section 'reviews' %}
+      {% endcase %}
+    {% endfor %}
+  </main>
+  {% section 'footer' %}
+  {{ 'purelane.js' | asset_url | script_tag }}
+</body>
+</html>
