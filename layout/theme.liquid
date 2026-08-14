@@ -13,20 +13,7 @@
 <body>
   {% section 'header' %}
   <main>
-    {% for block in section.blocks %}
-      {% case block.type %}
-        {% when 'hero' %}
-          {% section 'hero' %}
-        {% when 'product_grid' %}
-          {% section 'product-grid' %}
-        {% when 'combos' %}
-          {% section 'combos' %}
-        {% when 'bundles' %}
-          {% section 'bundles' %}
-        {% when 'reviews' %}
-          {% section 'reviews' %}
-      {% endcase %}
-    {% endfor %}
+    {{ content_for_layout }}
   </main>
   {% section 'footer' %}
   {{ 'purelane.js' | asset_url | script_tag }}

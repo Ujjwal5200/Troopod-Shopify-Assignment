@@ -16,7 +16,8 @@
               {% endif %}
               <div class="stack">
                 {% for i in (1..2) %}
-                  {% assign p = block.settings['product_' | append: i] %}
+                  {% assign product_key = 'product_' | append: i %}
+                  {% assign p = block.settings[product_key] %}
                   {% if p %}
                     <span class="it">
                       <a href="{{ p.url }}">
@@ -66,7 +67,7 @@
         { "type": "text", "id": "combo_price", "label": "Combo price", "default": "₹499" },
         { "type": "text", "id": "combo_compare_price", "label": "Compare at price" },
         { "type": "text", "id": "combo_products", "label": "Product count label", "default": "3 products" },
-        { "type": "url", "id": "combo_link", "label": "Link", "default": "#bundles" },
+        { "type": "url", "id": "combo_link", "label": "Link", "default": "/collections/all" },
         { "type": "product", "id": "product_1", "label": "Product 1" },
         { "type": "product", "id": "product_2", "label": "Product 2" }
       ]
