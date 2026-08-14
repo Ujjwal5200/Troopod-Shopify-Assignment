@@ -12,10 +12,17 @@
 </head>
 <body>
   {% section 'header' %}
-  <main>
+  <main id="top">
     {{ content_for_layout }}
   </main>
   {% section 'footer' %}
+
+  <!-- ================= STICKY CTA ================= -->
+  <div class="sticky">
+    <span class="lbl"><b>Pick any 3, pay ₹499</b><span>Free shipping, always</span></span>
+    <a class="btn btn-primary btn-sm" href="#bundles">Build bundle</a>
+  </div>
+
   {{ 'purelane.js' | asset_url | script_tag }}
 </body>
 </html>
