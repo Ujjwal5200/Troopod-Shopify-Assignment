@@ -1,48 +1,46 @@
-<section class="sec" id="categories" data-scene="4">
+<section class="sec" id="categories" data-scene="4" data-section-id="{{ section.id }}">
   <div class="wrap">
     <div class="panel-head rv">
       <span class="kicker">Bundle categories</span>
       <h2 class="d2" style="margin-top:12px">Find the right bundle for you</h2>
     </div>
     <div class="cats">
-      {% for block in section.blocks %}
-        {% assign collection = collections[block.settings.collection] %}
-        <a class="glass cat rv{% if forloop.index == 2 %} rv-d1{% elsif forloop.index == 3 %} rv-d2{% elsif forloop.index == 4 %} rv-d3{% endif %}" href="{{ collection.url | default: '#combos' }}" {{ block.shopify_attributes }}>
-          <span class="ph">
-            {% if collection.featured_image %}
-              <span class="pimg" role="img" aria-label="{{ collection.title }}">
-                <img src="{{ collection.featured_image | img_url: '400x' }}" alt="{{ collection.title | escape }}" loading="lazy">
-              </span>
-            {% elsif block.settings.image %}
-              <span class="pimg" role="img" aria-label="{{ block.settings.title | default: block.settings.collection }}">
-                <img src="{{ block.settings.image | img_url: '400x' }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-              </span>
-            {% endif %}
-          </span>
-          <span class="txt">
-            <h4>{{ block.settings.title | default: collection.title }}</h4>
-            <p>{{ block.settings.subtitle | default: collection.description | truncate: 60 }}</p>
-          </span>
-        </a>
-      {% endfor %}
+      <a class="glass cat rv" href="#combos">
+        <span class="ph"><span class="pimg p-kitchen" role="img" aria-label="Purelane foaming kitchen cleaner"></span></span>
+        <span class="txt"><h4>Kitchen bundle</h4><p>Grease, dishes &amp; more</p></span>
+      </a>
+      <a class="glass cat rv rv-d1" href="#combos">
+        <span class="ph"><span class="pimg p-toilet" role="img" aria-label="Purelane non-toxic toilet cleaner"></span></span>
+        <span class="txt"><h4>Bathroom bundle</h4><p>Deep clean &amp; disinfect</p></span>
+      </a>
+      <a class="glass cat rv rv-d2" href="#combos">
+        <span class="ph"><span class="pimg p-laundry" role="img" aria-label="Purelane non-toxic laundry detergent"></span></span>
+        <span class="txt"><h4>Laundry bundle</h4><p>Softer, fresher wash</p></span>
+      </a>
+      <a class="glass cat rv rv-d3" href="#combos">
+        <span class="ph"><span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover"></span></span>
+        <span class="txt"><h4>Hard water bundle</h4><p>Melt away limescale</p></span>
+      </a>
     </div>
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Bundle Categories",
-  "blocks": [
+  "settings": [
     {
-      "type": "category",
-      "name": "Category",
-      "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Kitchen bundle" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Grease, dishes & more" }
-      ]
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find the right bundle for you"
     }
   ],
-  "presets": [{ "name": "Bundle Categories" }]
+  "presets": [
+    {
+      "name": "Bundle Categories",
+      "category": "Text"
+    }
+  ]
 }
 {% endschema %}

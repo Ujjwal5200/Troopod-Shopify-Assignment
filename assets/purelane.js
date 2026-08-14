@@ -1,70 +1,6 @@
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Locomotive Scroll init ---------- */
-  var isEditor = document.body.classList.contains('shopify-editor-frame') ||
-                 document.body.classList.contains('shopify-section') ||
-                 (window.Shopify && window.Shopify.designMode);
-
-  var locomotiveScroll = null;
-  var scrollY = 0;
-  var scrollX = 0;
-
-  function getScrollY() {
-    if (locomotiveScroll) return locomotiveScroll.scroll.y;
-    return window.scrollY || window.pageYOffset;
-  }
-
-  function getScrollX() {
-    if (locomotiveScroll) return locomotiveScroll.scroll.x;
-    return window.scrollX || window.pageXOffset;
-  }
-
-  if (!isEditor && typeof LocomotiveScroll !== 'undefined') {
-    locomotiveScroll = new LocomotiveScroll({
-      el: document.querySelector('[data-scroll-container]'),
-      smooth: !reduce,
-      lerp: 0.08,
-      smartphone: { smooth: !reduce },
-      tablet: { smooth: !reduce, breakpoint: 1024 },
-      getDirection: true,
-      getSpeed: true,
-      reloadOnContextChange: false
-    });
-
-    locomotiveScroll.on('scroll', function (args) {
-      scrollY = args.scroll.y;
-      scrollX = args.scroll.x;
-      requestAnimationFrame(frame);
-    });
-  } else {
-    window.addEventListener('scroll', function () {
-      scrollY = window.scrollY || window.pageYOffset;
-      scrollX = window.scrollX || window.pageXOffset;
-      requestAnimationFrame(frame);
-    }, { passive: true });
-    window.addEventListener('resize', function () {
-      scrollY = window.scrollY || window.pageYOffset;
-      requestAnimationFrame(frame);
-    });
-  }
-
-  /* ---------- intercept anchor links ---------- */
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-    var targetId = link.getAttribute('href');
-    if (targetId === '#') return;
-    var target = document.querySelector(targetId);
-    if (!target) return;
-    e.preventDefault();
-    if (locomotiveScroll) {
-      locomotiveScroll.scrollTo(target, { offset: 0, duration: 1000 });
-    } else {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-
   /* ---------- reveal on scroll ---------- */
   var revs = document.querySelectorAll('.rv');
   if ('IntersectionObserver' in window && !reduce) {
@@ -88,10 +24,10 @@
     if (stage) stage.setAttribute('data-d', String(n));
   }
   function pickScene() {
-    var focus = getScrollY() + window.innerHeight * 0.5, n = 1;
+    var focus = window.scrollY + window.innerHeight * 0.5, n = 1;
     for (var i = 0; i < zones.length; i++) {
-      var z = zones[i];
-      var top = z.getBoundingClientRect().top + getScrollY();
+      var z = zones[i], top = 0, el = z;
+      while (el) { top += el.offsetTop; el = el.offsetParent; }
       if (top <= focus) n = parseInt(z.getAttribute('data-scene'), 10) || n;
     }
     setScene(n);
@@ -101,13 +37,8 @@
   var railLinks = [].slice.call(document.querySelectorAll('.rail a'));
   var targets = railLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
   function syncRail() {
-    var mid = getScrollY() + window.innerHeight * 0.42, idx = 0;
-    targets.forEach(function (t, i) {
-      if (t) {
-        var top = t.getBoundingClientRect().top + getScrollY();
-        if (top <= mid) idx = i;
-      }
-    });
+    var mid = window.scrollY + window.innerHeight * 0.42, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.offsetTop <= mid) idx = i; });
     railLinks.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
   }
 
@@ -118,7 +49,7 @@
 
   function frame() {
     raf = null;
-    var y = getScrollY();
+    var y = window.scrollY || window.pageYOffset;
     if (hdr) hdr.classList.toggle('up', y > 90);
     if (!reduce) {
       var wl = document.querySelectorAll('#water .wl');
@@ -136,12 +67,15 @@
     syncRail();
     pickScene();
   }
+  function onScroll() { if (!raf) raf = requestAnimationFrame(frame); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 
   if (!reduce && window.matchMedia('(min-width: 1024px)').matches) {
     window.addEventListener('mousemove', function (e) {
       mx = (e.clientX / window.innerWidth - 0.5) * 2;
       my = (e.clientY / window.innerHeight - 0.5) * 2;
-      requestAnimationFrame(frame);
+      onScroll();
     }, { passive: true });
   }
 

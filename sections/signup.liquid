@@ -1,27 +1,39 @@
-<section class="sec" data-scene="4">
+<section class="sec" data-scene="4" data-section-id="{{ section.id }}">
   <div class="wrap">
     <div class="glass signup rv">
-      <span class="kicker">{{ section.settings.kicker | default: 'Join the Purelane Club' }}</span>
-      <h2 class="d2" style="margin-top:12px">{{ section.settings.heading | default: 'Get ₹100 off your first bundle' }}</h2>
-      <p class="lede" style="margin:14px auto 0">{{ section.settings.lede | default: 'Sign up for tips, offers and first access to new drops.' }}</p>
-      <form class="sform" action="{{ section.settings.form_action | default: '/contact' }}" method="post">
-        <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
-        <button class="btn btn-primary btn-sm" type="submit">Sign up</button>
+      <span class="kicker">Join the Purelane Club</span>
+      <h2 class="d2" style="margin-top:12px">Get ₹100 off your first bundle</h2>
+      <p class="lede" style="margin:0 auto">Plus first access to new launches and restocks.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+        <button class="btn btn-primary" type="submit">Get my ₹100 off</button>
       </form>
-      <p class="fine">{{ section.settings.fine | default: 'No spam. Unsubscribe anytime.' }}</p>
     </div>
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Signup",
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Join the Purelane Club" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Get ₹100 off your first bundle" },
-    { "type": "text", "id": "lede", "label": "Lede", "default": "Sign up for tips, offers and first access to new drops." },
-    { "type": "text", "id": "form_action", "label": "Form action URL", "default": "/contact" },
-    { "type": "text", "id": "fine", "label": "Fine print", "default": "No spam. Unsubscribe anytime." }
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get ₹100 off your first bundle"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Plus first access to new launches and restocks."
+    }
   ],
-  "presets": [{ "name": "Signup" }]
+  "presets": [
+    {
+      "name": "Signup",
+      "category": "Text"
+    }
+  ]
 }
 {% endschema %}

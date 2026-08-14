@@ -1,4 +1,4 @@
-<section class="sec" id="bundles" data-scene="3">
+<section class="sec" id="bundles" data-scene="3" data-section-id="{{ section.id }}">
   <div class="wrap">
     <div class="glass sec-pad rv" style="margin-bottom:16px">
       <div class="panel-head" style="margin-bottom:0">
@@ -9,78 +9,125 @@
     </div>
     <div class="tiers">
       {% for block in section.blocks %}
-        {% assign product_1 = block.settings.product_1 %}
-        {% assign product_2 = block.settings.product_2 %}
-        {% assign product_3 = block.settings.product_3 %}
-        {% assign product_count = 0 %}
-        {% if product_1 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
-        {% if product_2 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
-        {% if product_3 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
-        <article class="glass tier rv{% if block.settings.featured %} best rv-d2{% endif %}{% if forloop.index == 3 %} rv-d3{% endif %}" {{ block.shopify_attributes }}>
-          {% if block.settings.tag != blank %}<span class="tag">{{ block.settings.tag }}</span>{% endif %}
-          <div class="tierpix{% if product_count == 5 %} five{% endif %}" aria-hidden="true">
-            {% if product_1 != blank %}
-              <span class="pimg" role="img" aria-label="{{ product_1.title }}">
-                <img src="{{ product_1.featured_image | img_url: '200x' }}" alt="{{ product_1.title | escape }}" loading="lazy">
-              </span>
+      <article class="glass tier rv{% if block.settings.featured %} best{% endif %}{% if forloop.index == 2 %} rv-d2{% elsif forloop.index == 3 %} rv-d3{% endif %}">
+        <span class="tag">{{ block.settings.tag | default: 'Starter' }}</span>
+        <div class="tierpix{% if block.settings.product_count == '5' %} five{% endif %}" aria-hidden="true">
+          {% assign products = block.settings.product_handles | split: ',' %}
+          {% for handle in products %}
+            {% assign prod = all_products[handle | strip] %}
+            {% if prod and prod.featured_image %}
+              <span class="pimg" role="img" aria-label="{{ prod.title }}" style="background-image: url({{ prod.featured_image | img_url: '150x' }})"></span>
+            {% else %}
+              <span class="pimg p-combo2" role="img" aria-label="Combo product"></span>
             {% endif %}
-            {% if product_2 != blank %}
-              <span class="pimg" role="img" aria-label="{{ product_2.title }}">
-                <img src="{{ product_2.featured_image | img_url: '200x' }}" alt="{{ product_2.title | escape }}" loading="lazy">
-              </span>
-            {% endif %}
-            {% if product_3 != blank %}
-              <span class="pimg" role="img" aria-label="{{ product_3.title }}">
-                <img src="{{ product_3.featured_image | img_url: '200x' }}" alt="{{ product_3.title | escape }}" loading="lazy">
-              </span>
-            {% endif %}
-          </div>
-          <div class="qty">{{ product_count }}<small>Products</small></div>
-          <div class="price">{{ block.settings.price }} <s>{{ block.settings.compare_price }}</s></div>
-          <p class="body-s" style="font-size:12px">{{ block.settings.per_product }}</p>
-          <ul>
-            {% if block.settings.feature_1 != blank %}
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_1 }}</li>
-            {% endif %}
-            {% if block.settings.feature_2 != blank %}
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_2 }}</li>
-            {% endif %}
-            {% if block.settings.feature_3 != blank %}
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_3 }}</li>
-            {% endif %}
-          </ul>
-          <a class="btn{% if block.settings.featured %} btn-primary{% else %} btn-ghost{% endif %}" href="{{ block.settings.link }}">Build this box
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
-          </a>
-        </article>
+          {% endfor %}
+        </div>
+        <div class="qty">{{ block.settings.product_count | default: '2' }}<small>Products</small></div>
+        <div class="price">{{ block.settings.price | default: '₹349' }} <s>{{ block.settings.compare | default: '₹598' }}</s></div>
+        <p class="body-s" style="font-size:12px">Flat {{ block.settings.per_product | default: '₹174' }} per product</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_1 | default: 'Pick any two products' }}</li>
+          {% if block.settings.feature_2 != blank %}
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_2 }}</li>
+          {% endif %}
+          {% if block.settings.feature_3 != blank %}
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_3 }}</li>
+          {% endif %}
+        </ul>
+        <a class="btn{% if block.settings.featured %} btn-primary{% else %} btn-ghost{% endif %}" href="#shop">Build this box
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+        </a>
+      </article>
       {% endfor %}
     </div>
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Bundles",
+  "tag": "section",
+  "class": "bundles-section",
+  "max_blocks": 4,
   "blocks": [
     {
-      "type": "bundle",
-      "name": "Bundle",
+      "type": "tier",
+      "name": "Bundle tier",
       "settings": [
-        { "type": "text", "id": "tag", "label": "Tag", "default": "Starter" },
-        { "type": "text", "id": "qty", "label": "Product count", "default": "2" },
-        { "type": "text", "id": "price", "label": "Price", "default": "₹349" },
-        { "type": "text", "id": "compare_price", "label": "Compare at price", "default": "₹598" },
-        { "type": "text", "id": "per_product", "label": "Per product note", "default": "Flat ₹174 per product" },
-        { "type": "text", "id": "feature_1", "label": "Feature 1", "default": "Pick any two products" },
-        { "type": "text", "id": "feature_2", "label": "Feature 2", "default": "Free shipping across India" },
-        { "type": "text", "id": "feature_3", "label": "Feature 3" },
-        { "type": "url", "id": "link", "label": "Link", "default": "/collections/all" },
-        { "type": "product", "id": "product_1", "label": "Product 1" },
-        { "type": "product", "id": "product_2", "label": "Product 2" },
-        { "type": "product", "id": "product_3", "label": "Product 3" },
-        { "type": "checkbox", "id": "featured", "label": "Mark as most popular", "default": false }
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Badge text",
+          "default": "Starter"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Product count",
+          "default": "2"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Bundle price",
+          "default": "₹349"
+        },
+        {
+          "type": "text",
+          "id": "compare",
+          "label": "Compare at price",
+          "default": "₹598"
+        },
+        {
+          "type": "text",
+          "id": "per_product",
+          "label": "Per product price",
+          "default": "₹174"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1",
+          "default": "Pick any two products"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2",
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature 3",
+          "default": ""
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Mark as most popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "product_handles",
+          "label": "Product image handles (comma separated)",
+          "default": "kitchen-cleaner,tap-cleaner",
+          "info": "Enter product handles to show their images in the tier"
+        }
       ]
     }
   ],
-  "presets": [{ "name": "Bundles" }]
+  "presets": [
+    {
+      "name": "Bundles",
+      "category": "Collection",
+      "blocks": [
+        { "type": "tier", "settings": { "tag": "Starter", "product_count": "2", "price": "₹349", "compare": "₹598", "per_product": "₹174", "feature_1": "Pick any two products", "feature_2": "Free shipping across India", "product_handles": "kitchen-cleaner,tap-cleaner" } },
+        { "type": "tier", "settings": { "tag": "Most popular", "product_count": "3", "price": "₹499", "compare": "₹897", "per_product": "₹166", "feature_1": "Pick any three products", "feature_2": "Covers kitchen and laundry", "feature_3": "Free shipping across India", "featured": true, "product_handles": "kitchen-cleaner,tap-cleaner,dishwash-gel" } },
+        { "type": "tier", "settings": { "tag": "Whole home", "product_count": "5", "price": "₹799", "compare": "₹1495", "per_product": "₹160", "feature_1": "Pick any five products", "feature_2": "Every room in one order", "feature_3": "Free shipping across India", "product_handles": "kitchen-cleaner,laundry-detergent,floor-cleaner,toilet-cleaner,tap-cleaner" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

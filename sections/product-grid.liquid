@@ -1,4 +1,4 @@
-<section class="sec" id="shop" data-scene="3">
+<section class="sec" id="shop" data-scene="3" data-section-id="{{ section.id }}">
   <div class="wrap">
     <div class="panel-head rv">
       <span class="kicker">Bestsellers</span>
@@ -9,36 +9,75 @@
         <i></i>
       </div>
     </div>
-    {% assign products = collections[section.settings.collection].products %}
-    {% if products.size > 0 %}
-      <div class="shelf">
-        {% for product in products limit: section.settings.products_to_show %}
-          {% assign delay_class = '' %}
-          {% case forloop.index %}
-            {% when 2 %}{% assign delay_class = 'rv-d1' %}
-            {% when 3 %}{% assign delay_class = 'rv-d2' %}
-            {% when 4 %}{% assign delay_class = 'rv-d3' %}
-            {% when 6 %}{% assign delay_class = 'rv-d1' %}
-            {% when 7 %}{% assign delay_class = 'rv-d2' %}
-            {% when 8 %}{% assign delay_class = 'rv-d3' %}
-          {% endcase %}
-          <article class="glass card rv {{ delay_class }}">
-            {% render 'product-card', product: product %}
-          </article>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p style="text-align:center;color:var(--paper-2);padding:40px 0">Select a collection in the theme editor to display products.</p>
-    {% endif %}
+    <div class="shelf">
+      {% assign product_count = 0 %}
+      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+        {% assign product_count = product_count | plus: 1 %}
+        <article class="glass card rv rv-d{{ product_count | modulo: 5 }}">
+          <div class="shot">
+            {% if product.featured_image %}
+              <span class="pimg" role="img" aria-label="{{ product.title }}" style="background-image: url({{ product.featured_image | img_url: '300x' }})"></span>
+            {% else %}
+              <span class="pimg" role="img" aria-label="{{ product.title }}" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22%3E%3Crect fill=%22%234b3a8f%22 width=%22300%22 height=%22300%22/%3E%3Ctext fill=%22%23faf7fd%22 font-family=%22sans-serif%22 font-size=%2216%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3ENo Image%3C/text%3E%3C/svg%3E')"></span>
+            {% endif %}
+            {% if product.available == false %}
+              <span class="pill" style="background:rgba(23,16,43,.8);border-color:rgba(240,160,60,.4);color:#f0a03c">Sold out</span>
+            {% else %}
+              <span class="pill">Best seller</span>
+            {% endif %}
+          </div>
+          <h4>{{ product.title }}</h4>
+          <div class="rate">
+            <b>&starf; 4.8</b> &middot; {{ product.metafields.custom.review_count | default: 100 | round }} reviews
+          </div>
+          <div class="pr">
+            <strong>{{ product.price | money }}</strong>
+            {% if product.compare_at_price_max and product.compare_at_price_max > product.price %}
+              <s>{{ product.compare_at_price_max | money }}</s>
+              {% assign discount = product.price | times: 100 | divided_by: product.compare_at_price_max | round | times: -1 | plus: 100 %}
+              <em>{{ discount }}% off</em>
+            {% endif %}
+          </div>
+          <button class="btn btn-ghost btn-sm"{% unless product.available %} disabled{% endunless %}>
+            {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+          </button>
+        </article>
+      {% endfor %}
+    </div>
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Product Grid",
+  "tag": "section",
+  "class": "shop-section",
   "settings": [
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "products_to_show", "min": 2, "max": 12, "step": 1, "label": "Products to show", "default": 8 }
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "default": "frontpage"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8,
+      "label": "Products to show"
+    }
   ],
-  "presets": [{ "name": "Product Grid" }]
+  "presets": [
+    {
+      "name": "Shop / Product Grid",
+      "category": "Collection",
+      "settings": {
+        "collection": "frontpage",
+        "products_to_show": 8
+      }
+    }
+  ]
 }
 {% endschema %}

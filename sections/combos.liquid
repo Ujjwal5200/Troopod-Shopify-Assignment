@@ -1,4 +1,4 @@
-<section class="sec" id="combos" data-scene="3">
+<section class="sec" id="combos" data-scene="3" data-section-id="{{ section.id }}">
   <div class="wrap">
     <div class="panel-head rv">
       <span class="kicker">Pre-built to save you money</span>
@@ -8,72 +8,135 @@
     </div>
     <div class="comborail rv">
       {% for block in section.blocks %}
-        {% assign product_1 = block.settings.product_1 %}
-        {% assign product_2 = block.settings.product_2 %}
-        {% assign product_count = 0 %}
-        {% if product_1 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
-        {% if product_2 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
-        <article class="glass combo" {{ block.shopify_attributes }}>
-          <div class="tray">
-            {% if block.settings.save_label != blank %}<span class="save">{{ block.settings.save_label }}</span>{% endif %}
-            {% if block.settings.flag != blank %}<span class="flag">{{ block.settings.flag }}</span>{% endif %}
-            <div class="stack">
-              {% if product_1 != blank %}
-                <span class="it">
-                  <span class="pimg" role="img" aria-label="{{ product_1.title }}">
-                    <img src="{{ product_1.featured_image | img_url: '200x' }}" alt="{{ product_1.title | escape }}" loading="lazy">
-                  </span>
-                  <span>{{ product_1.title | truncate: 40 }}</span>
-                </span>
+      <article class="glass combo{% if block.settings.featured %} hero-combo{% endif %}">
+        <div class="tray">
+          <span class="save">You save {{ block.settings.save_text | default: '₹398' }}</span>
+          {% if block.settings.featured %}<span class="flag">Most popular</span>{% endif %}
+          <div class="stack">
+            {% assign products = block.settings.product_1 | split: ',' %}
+            {% for product_handle in products %}
+              {% assign prod = all_products[product_handle | strip] %}
+              {% if prod %}
+              <span class="it">
+                {% if prod.featured_image %}
+                <span class="pimg" role="img" aria-label="{{ prod.title }}" style="background-image: url({{ prod.featured_image | img_url: '150x' }})"></span>
+                {% else %}
+                <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg></span>
+                {% endif %}
+                <span>{{ prod.title | truncate: 22 }}</span>
+              </span>
+              {% if forloop.last == false %}<span class="plus" aria-hidden="true">+</span>{% endif %}
               {% endif %}
-              {% if product_1 != blank and product_2 != blank %}<span class="plus" aria-hidden="true">+</span>{% endif %}
-              {% if product_2 != blank %}
-                <span class="it">
-                  <span class="pimg" role="img" aria-label="{{ product_2.title }}">
-                    <img src="{{ product_2.featured_image | img_url: '200x' }}" alt="{{ product_2.title | escape }}" loading="lazy">
-                  </span>
-                  <span>{{ product_2.title | truncate: 40 }}</span>
-                </span>
-              {% endif %}
-            </div>
+            {% endfor %}
           </div>
-          <div class="body">
-            <h3>{{ block.settings.combo_title }}</h3>
-            <div class="cnt">{{ product_count }} products</div>
-            <p class="inc">{{ block.settings.combo_desc }}</p>
-            <div class="prow"><strong>{{ block.settings.combo_price }}</strong><s>{{ block.settings.combo_compare_price }}</s><em>Save {{ block.settings.save_amount }}</em></div>
-            <div class="fine">Inclusive of all taxes &middot; COD available</div>
-            <a class="btn btn-ghost" href="{{ block.settings.combo_link }}">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+        </div>
+        <div class="body">
+          <h3>{{ block.settings.title | default: 'Kitchen essentials' }}</h3>
+          <div class="cnt">{{ block.settings.product_count | default: '3' }} products</div>
+          <p class="inc">{{ block.settings.description | default: 'Includes: Foaming Kitchen Cleaner, Dishwash Gel & Tap Cleaner. Everything for a sparkling kitchen, no need to pick separately.' }}</p>
+          <div class="prow">
+            <strong>{{ block.settings.price | default: '₹499' }}</strong>
+            <s>{{ block.settings.compare | default: '₹897' }}</s>
+            <em>Save {{ block.settings.save | default: '₹398' }}</em>
           </div>
-        </article>
+          <div class="fine">Inclusive of all taxes &middot; COD available</div>
+          <a class="btn btn-ghost" href="{{ block.settings.link | default: '#bundles' }}">Shop bundle
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
       {% endfor %}
     </div>
     <div class="swipecue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>Swipe for more combos</div>
-    <p class="railnote">Tapping "Shop bundle" opens the bundle picker with these products already added. You can still swap anything before you pay.</p>
+    <p class="railnote">Tapping &quot;Shop bundle&quot; opens the bundle picker with these products already added. You can still swap anything before you pay.</p>
   </div>
 </section>
+
 {% schema %}
 {
-  "name": "Best-selling Combos",
+  "name": "Best Selling Combos",
+  "tag": "section",
+  "class": "combos-section",
+  "max_blocks": 6,
   "blocks": [
     {
       "type": "combo",
       "name": "Combo",
       "settings": [
-        { "type": "text", "id": "combo_title", "label": "Combo title", "default": "Kitchen essentials" },
-        { "type": "text", "id": "combo_desc", "label": "Description", "default": "Everything for a sparkling kitchen." },
-        { "type": "text", "id": "save_label", "label": "Save label", "default": "You save ₹398" },
-        { "type": "text", "id": "save_amount", "label": "Save amount", "default": "₹398" },
-        { "type": "text", "id": "flag", "label": "Flag", "default": "Most popular" },
-        { "type": "text", "id": "combo_price", "label": "Combo price", "default": "₹499" },
-        { "type": "text", "id": "combo_compare_price", "label": "Compare at price", "default": "₹897" },
-        { "type": "text", "id": "combo_products", "label": "Product count label", "default": "3 products" },
-        { "type": "url", "id": "combo_link", "label": "Link", "default": "/collections/all" },
-        { "type": "product", "id": "product_1", "label": "Product 1" },
-        { "type": "product", "id": "product_2", "label": "Product 2" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Combo name",
+          "default": "Kitchen essentials"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Product count",
+          "default": "3"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Includes: Foaming Kitchen Cleaner, Dishwash Gel & Tap Cleaner. Everything for a sparkling kitchen, no need to pick separately."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Bundle price",
+          "default": "₹499"
+        },
+        {
+          "type": "text",
+          "id": "compare",
+          "label": "Compare at price",
+          "default": "₹897"
+        },
+        {
+          "type": "text",
+          "id": "save",
+          "label": "You save amount",
+          "default": "₹398"
+        },
+        {
+          "type": "text",
+          "id": "save_text",
+          "label": "Save badge text",
+          "default": "You save ₹398"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Mark as most popular",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link",
+          "default": "#bundles"
+        },
+        {
+          "type": "text",
+          "id": "product_1",
+          "label": "Product handles (comma separated)",
+          "default": "kitchen-cleaner,dishwash-gel,tap-cleaner",
+          "info": "Enter product handles to show their images"
+        }
       ]
     }
   ],
-  "presets": [{ "name": "Combos Rail" }]
+  "presets": [
+    {
+      "name": "Best Selling Combos",
+      "category": "Collection",
+      "blocks": [
+        { "type": "combo", "settings": { "title": "Kitchen essentials", "product_count": "3", "price": "₹499", "compare": "₹897", "save": "₹398", "save_text": "You save ₹398", "featured": true, "product_1": "kitchen-cleaner,dishwash-gel,tap-cleaner" } },
+        { "type": "combo", "settings": { "title": "Laundry bundle", "product_count": "2", "price": "₹349", "compare": "₹598", "save": "₹249", "save_text": "You save ₹249", "featured": false, "product_1": "laundry-detergent,fabric-softener" } },
+        { "type": "combo", "settings": { "title": "Bathroom kit", "product_count": "2", "price": "₹299", "compare": "₹498", "save": "₹199", "save_text": "You save ₹199", "featured": false, "product_1": "toilet-cleaner,floor-cleaner" } }
+      ]
+    }
+  ]
 }
 {% endschema %}
