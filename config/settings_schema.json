@@ -1,24 +1,7 @@
 [
   {
-    "name": "Purelane",
-    "theme_version": "1.0.0",
+    "name": "Theme settings",
     "settings": [
-      {
-        "type": "header",
-        "content": "Typography"
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Heading font",
-        "default": "Outfit"
-      },
-      {
-        "type": "font_picker",
-        "id": "body_font",
-        "label": "Body font",
-        "default": "Inter"
-      },
       {
         "type": "header",
         "content": "Colors"
