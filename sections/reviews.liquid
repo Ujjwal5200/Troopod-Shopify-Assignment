@@ -1,4 +1,4 @@
-<section class="revband" id="reviews">
+<section class="sec revband" id="reviews" data-scene="1">
   <div class="wrap">
     <div class="revhead rv">
       <span class="kicker">That's what they said</span>
@@ -6,26 +6,70 @@
       <span class="agg">Loved by <b>12 lakh+</b> homes</span>
     </div>
   </div>
-  {% if section.blocks.size > 0 %}
-    <div class="revrail rv" aria-label="Customer reviews">
-      <div class="revtrack">
-        {% for block in section.blocks %}
-          <article class="glass-2 rcard">
-            <div class="st">★★★★★</div>
-            <h5>{{ block.settings.title | escape }}</h5>
-            <p>{{ block.settings.text | escape }}</p>
-            <div class="who">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
-              <b>{{ block.settings.reviewer | escape }}</b>
-              {% if block.settings.product != blank %}
-                <span>&middot; {{ block.settings.product.title | escape }}</span>
-              {% endif %}
-            </div>
-          </article>
-        {% endfor %}
-      </div>
+  <div class="revrail rv" aria-label="Customer reviews">
+    <div class="revtrack">
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Works like a charm</h5>
+        <p>Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Anita</b>
+          <span>&middot; Laundry detergent</span>
+        </div>
+      </article>
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Best dishwash ever</h5>
+        <p>Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Priya</b>
+          <span>&middot; Dishwash gel</span>
+        </div>
+      </article>
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Great product, great packaging</h5>
+        <p>Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Sunita</b>
+          <span>&middot; Liquid handwash</span>
+        </div>
+      </article>
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Dog friendly</h5>
+        <p>We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Rohit S.</b>
+          <span>&middot; Floor cleaner</span>
+        </div>
+      </article>
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Sparkling taps again</h5>
+        <p>Hard water had ruined our bathroom taps. This brought them back to new in one wipe.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Kavita</b>
+          <span>&middot; Tap cleaner</span>
+        </div>
+      </article>
+      <article class="glass-2 rcard">
+        <div class="st">★★★★★</div>
+        <h5>Finally, no more plastic</h5>
+        <p>I hated throwing away so many bottles. The refills are easy to use and the quality is just as good.</p>
+        <div class="who">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          <b>Meera</b>
+          <span>&middot; Laundry detergent</span>
+        </div>
+      </article>
     </div>
-  {% endif %}
+  </div>
 </section>
 {% schema %}
 {

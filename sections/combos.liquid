@@ -1,4 +1,4 @@
-<section class="sec" id="combos">
+<section class="sec" id="combos" data-scene="3">
   <div class="wrap">
     <div class="panel-head rv">
       <span class="kicker">Pre-built to save you money</span>
@@ -6,51 +6,88 @@
       <div class="rule"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg><i></i></div>
       <p class="lede" style="margin:14px auto 0">Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.</p>
     </div>
-    {% if section.blocks.size > 0 %}
-      <div class="comborail rv">
-        {% for block in section.blocks %}
-          <article class="glass combo">
-            <div class="tray">
-              {% if block.settings.combo_text != blank %}
-                <span class="save">{{ block.settings.combo_text | escape }}</span>
-              {% endif %}
-              <div class="stack">
-                {% for i in (1..2) %}
-                  {% assign product_key = 'product_' | append: i %}
-                  {% assign p = block.settings[product_key] %}
-                  {% if p %}
-                    <span class="it">
-                      <a href="{{ p.url }}">
-                        {% if p.featured_image %}
-                          <img src="{{ p.featured_image | img_url: '100x100' }}" alt="{{ p.title | escape }}" class="pimg" loading="lazy">
-                        {% else %}
-                          <div class="pimg tile" style="background:rgba(236,230,247,.08);border:1px dashed rgba(236,230,247,.26);display:grid;place-items:center;color:var(--accent);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">No img</div>
-                        {% endif %}
-                        <span>{{ p.title | truncate: 25 }}</span>
-                      </a>
-                    </span>
-                    {% if i == 1 %}<span class="plus" aria-hidden="true">+</span>{% endif %}
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-            <div class="body">
-              <h3>{{ block.settings.combo_title | escape }}</h3>
-              <div class="cnt">{{ block.settings.combo_products | default: '2 products' }}</div>
-              <p class="inc">{{ block.settings.combo_desc | escape }}</p>
-              <div class="prow">
-                <strong>{{ block.settings.combo_price | default: '₹499' }}</strong>
-                {% if block.settings.combo_compare_price != blank %}
-                  <s>{{ block.settings.combo_compare_price }}</s>
-                {% endif %}
-              </div>
-              <a href="{{ block.settings.combo_link | default: '#bundles' }}" class="btn btn-ghost">Shop bundle<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-      <div class="swipecue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>Swipe for more combos</div>
-    {% endif %}
+    <div class="comborail rv">
+      <article class="glass combo">
+        <div class="tray">
+          <span class="save">You save &#8377;398</span>
+          <span class="flag">Most popular</span>
+          <div class="stack">
+            <span class="it">
+              <span class="pimg p-kitchen" role="img" aria-label="Purelane foaming kitchen cleaner"></span>
+              <span>Cuts grease instantly</span>
+            </span>
+            <span class="plus" aria-hidden="true">+</span>
+            <span class="it">
+              <span class="pimg p-dish" role="img" aria-label="Purelane organic dishwash liquid gel"></span>
+              <span>Squeaky clean dishes</span>
+            </span>
+            <span class="plus" aria-hidden="true">+</span>
+            <span class="it">
+              <span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover"></span>
+              <span>Melts hard water stains</span>
+            </span>
+          </div>
+        </div>
+        <div class="body">
+          <h3>Kitchen essentials</h3>
+          <div class="cnt">3 products</div>
+          <p class="inc">Includes: Foaming Kitchen Cleaner, Dishwash Gel &amp; Tap Cleaner. Everything for a sparkling kitchen, no need to pick separately.</p>
+          <div class="prow"><strong>&#8377;499</strong><s>&#8377;897</s><em>Save &#8377;398</em></div>
+          <div class="fine">Inclusive of all taxes &middot; COD available</div>
+          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="glass combo">
+        <div class="tray">
+          <span class="save">You save &#8377;448</span>
+          <div class="stack">
+            <span class="it">
+              <span class="pimg p-laundry" role="img" aria-label="Purelane non-toxic laundry detergent"></span>
+              <span>Removes tough stains &amp; odour</span>
+            </span>
+            <span class="plus" aria-hidden="true">+</span>
+            <span class="it">
+              <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg></span>
+              <span>Softens &amp; freshens</span>
+            </span>
+          </div>
+        </div>
+        <div class="body">
+          <h3>Laundry day</h3>
+          <div class="cnt">2 products</div>
+          <p class="inc">Laundry detergent plus a gentle fabric softener. Clothes stay fresh for longer without any harsh residue.</p>
+          <div class="prow"><strong>&#8377;349</strong><s>&#8377;598</s><em>Save &#8377;249</em></div>
+          <div class="fine">Inclusive of all taxes &middot; COD available</div>
+          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="glass combo">
+        <div class="tray">
+          <span class="save">You save &#8377;249</span>
+          <div class="stack">
+            <span class="it">
+              <span class="pimg p-floor" role="img" aria-label="Purelane natural herbal floor cleaner"></span>
+              <span>Safe for pets &amp; kids</span>
+            </span>
+            <span class="plus" aria-hidden="true">+</span>
+            <span class="it">
+              <span class="pimg p-toilet" role="img" aria-label="Purelane non-toxic toilet cleaner"></span>
+              <span>Kills 99.9% of germs</span>
+            </span>
+          </div>
+        </div>
+        <div class="body">
+          <h3>Bathroom &amp; floor</h3>
+          <div class="cnt">2 products</div>
+          <p class="inc">Floor cleaner and toilet cleaner together. Keeps the wettest rooms fresh without chemical fumes.</p>
+          <div class="prow"><strong>&#8377;349</strong><s>&#8377;598</s><em>Save &#8377;249</em></div>
+          <div class="fine">Inclusive of all taxes &middot; COD available</div>
+          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+        </div>
+      </article>
+    </div>
+    <div class="swipecue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>Swipe for more combos</div>
+    <p class="railnote">Tapping "Shop bundle" opens the bundle picker with these products already added. You can still swap anything before you pay.</p>
   </div>
 </section>
 {% schema %}

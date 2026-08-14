@@ -1,28 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page_title }}</title>
-  {{ content_for_header }}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  {{ 'purelane.css' | asset_url | stylesheet_tag }}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Purelane &mdash; Plant-based homecare</title>
+<meta name="description" content="Plant-based homecare for kitchen, laundry, bathroom and hands. Free shipping across India." />
+<meta name="theme-color" content="#eee7fb" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{{ 'purelane.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
-  {% section 'header' %}
-  <main id="top">
-    {{ content_for_layout }}
-  </main>
-  {% section 'footer' %}
-
-  <!-- ================= STICKY CTA ================= -->
-  <div class="sticky">
-    <span class="lbl"><b>Pick any 3, pay ₹499</b><span>Free shipping, always</span></span>
-    <a class="btn btn-primary btn-sm" href="#bundles">Build bundle</a>
-  </div>
-
-  {{ 'purelane.js' | asset_url | script_tag }}
+{{ content_for_layout }}
+{{ 'purelane.js' | asset_url | script_tag }}
 </body>
 </html>

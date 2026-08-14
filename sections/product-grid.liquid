@@ -1,15 +1,30 @@
-<section class="sec" id="shop">
+<section class="sec" id="shop" data-scene="3">
   <div class="wrap">
     <div class="panel-head rv">
       <span class="kicker">Bestsellers</span>
       <h2 class="d2" style="margin-top:12px">Loved by 30,000 homes</h2>
-      <div class="rule"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg><i></i></div>
+      <div class="rule">
+        <i></i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+        <i></i>
+      </div>
     </div>
     {% assign products = collections[section.settings.collection].products %}
     {% if products.size > 0 %}
       <div class="shelf">
         {% for product in products limit: section.settings.products_to_show %}
-          {% render 'product-card', product: product %}
+          {% assign delay_class = '' %}
+          {% case forloop.index %}
+            {% when 2 %}{% assign delay_class = 'rv-d1' %}
+            {% when 3 %}{% assign delay_class = 'rv-d2' %}
+            {% when 4 %}{% assign delay_class = 'rv-d3' %}
+            {% when 6 %}{% assign delay_class = 'rv-d1' %}
+            {% when 7 %}{% assign delay_class = 'rv-d2' %}
+            {% when 8 %}{% assign delay_class = 'rv-d3' %}
+          {% endcase %}
+          <article class="glass card rv {{ delay_class }}">
+            {% render 'product-card', product: product %}
+          </article>
         {% endfor %}
       </div>
     {% else %}
