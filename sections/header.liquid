@@ -1,6 +1,6 @@
 <header id="hdr">
   <div class="navpill glass">
-    <a class="brand" href="/" aria-label="Purelane home">
+    <a class="brand" href="{{ section.settings.brand_link | default: '/' }}" aria-label="{{ section.settings.brand_name | default: 'Purelane' }} home">
       <span class="mark">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#b8701c">
           <path d="M12 3 20.5 8v8L12 21 3.5 16V8L12 3Z"/>
@@ -8,16 +8,16 @@
         </svg>
       </span>
       <span class="txt">
-        <span class="n1">Purelane</span>
-        <span class="n2">Clean, simply</span>
+        <span class="n1">{{ section.settings.brand_name | default: 'Purelane' }}</span>
+        <span class="n2">{{ section.settings.brand_tagline | default: 'Clean, simply' }}</span>
       </span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#top">Home</a>
-      <a href="#ingredients">Ingredients</a>
-      <a href="#how">How it works</a>
-      <a href="#shop">Shop</a>
-      <a href="#bundles">Bundles</a>
+      <a href="{{ section.settings.nav_home_url | default: '/' }}">{{ section.settings.nav_home | default: 'Home' }}</a>
+      <a href="#ingredients">{{ section.settings.nav_ingredients | default: 'Ingredients' }}</a>
+      <a href="#how">{{ section.settings.nav_how | default: 'How it works' }}</a>
+      <a href="{{ section.settings.nav_shop_url | default: '/collections/all' }}">{{ section.settings.nav_shop | default: 'Shop' }}</a>
+      <a href="#bundles">{{ section.settings.nav_bundles | default: 'Bundles' }}</a>
     </nav>
     <div class="navtools">
       <button class="ico hide-s" aria-label="Search">
@@ -45,8 +45,11 @@
     { "type": "url", "id": "brand_link", "label": "Brand link", "default": "/" },
     { "type": "text", "id": "nav_home", "label": "Home link text", "default": "Home" },
     { "type": "url", "id": "nav_home_url", "label": "Home link URL", "default": "/" },
+    { "type": "text", "id": "nav_ingredients", "label": "Ingredients link text", "default": "Ingredients" },
+    { "type": "text", "id": "nav_how", "label": "How it works link text", "default": "How it works" },
     { "type": "text", "id": "nav_shop", "label": "Shop link text", "default": "Shop" },
-    { "type": "url", "id": "nav_shop_url", "label": "Shop link URL", "default": "/collections/all" }
+    { "type": "url", "id": "nav_shop_url", "label": "Shop link URL", "default": "/collections/all" },
+    { "type": "text", "id": "nav_bundles", "label": "Bundles link text", "default": "Bundles" }
   ],
   "presets": [{ "name": "Header" }]
 }

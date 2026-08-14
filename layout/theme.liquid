@@ -9,9 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{{ 'locomotive-scroll.min.css' | asset_url | stylesheet_tag }}
 {{ 'purelane.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
+<a href="#top" class="skip-link">Skip to content</a>
 {{ content_for_header }}
 
 <div class="scenes" id="scenes" data-d="1">
@@ -73,19 +75,6 @@
   <div class="vig"></div>
 </div>
 
-<div class="ticker" aria-hidden="true">
-  <div class="track">
-    <span>Free shipping <b>on every bundle across India</b></span>
-    <span>100% plant-based <b>and non-toxic</b></span>
-    <span>Loved by <b>30,000+ happy homes</b></span>
-    <span>Buy 3 <b>at flat ₹499</b></span>
-    <span>Free shipping <b>on every bundle across India</b></span>
-    <span>100% plant-based <b>and non-toxic</b></span>
-    <span>Loved by <b>30,000+ happy homes</b></span>
-    <span>Buy 3 <b>at flat ₹499</b></span>
-  </div>
-</div>
-
 {% section 'header' %}
 
 <nav class="rail" aria-label="Section progress">
@@ -98,17 +87,31 @@
   <a href="#reviews" aria-label="Reviews"></a>
 </nav>
 
-<main id="top">
-{{ content_for_layout }}
-</main>
+<main data-scroll-container id="top">
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+    </div>
+  </div>
 
-{% section 'footer' %}
+  {{ content_for_layout }}
+
+  {% section 'footer' %}
+</main>
 
 <div class="sticky">
   <span class="lbl"><b>Pick any 3, pay ₹499</b><span>Free shipping, always</span></span>
   <a class="btn btn-primary btn-sm" href="#bundles">Build bundle</a>
 </div>
 
+{{ 'locomotive-scroll.min.js' | asset_url | script_tag }}
 {{ 'purelane.js' | asset_url | script_tag }}
 </body>
 </html>

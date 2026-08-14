@@ -7,84 +7,46 @@
       <p class="lede" style="margin:14px auto 0">Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.</p>
     </div>
     <div class="comborail rv">
-      <article class="glass combo">
-        <div class="tray">
-          <span class="save">You save &#8377;398</span>
-          <span class="flag">Most popular</span>
-          <div class="stack">
-            <span class="it">
-              <span class="pimg p-kitchen" role="img" aria-label="Purelane foaming kitchen cleaner"></span>
-              <span>Cuts grease instantly</span>
-            </span>
-            <span class="plus" aria-hidden="true">+</span>
-            <span class="it">
-              <span class="pimg p-dish" role="img" aria-label="Purelane organic dishwash liquid gel"></span>
-              <span>Squeaky clean dishes</span>
-            </span>
-            <span class="plus" aria-hidden="true">+</span>
-            <span class="it">
-              <span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover"></span>
-              <span>Melts hard water stains</span>
-            </span>
+      {% for block in section.blocks %}
+        {% assign product_1 = block.settings.product_1 %}
+        {% assign product_2 = block.settings.product_2 %}
+        {% assign product_count = 0 %}
+        {% if product_1 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+        {% if product_2 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+        <article class="glass combo" {{ block.shopify_attributes }}>
+          <div class="tray">
+            {% if block.settings.save_label != blank %}<span class="save">{{ block.settings.save_label }}</span>{% endif %}
+            {% if block.settings.flag != blank %}<span class="flag">{{ block.settings.flag }}</span>{% endif %}
+            <div class="stack">
+              {% if product_1 != blank %}
+                <span class="it">
+                  <span class="pimg" role="img" aria-label="{{ product_1.title }}">
+                    <img src="{{ product_1.featured_image | img_url: '200x' }}" alt="{{ product_1.title | escape }}" loading="lazy">
+                  </span>
+                  <span>{{ product_1.title | truncate: 40 }}</span>
+                </span>
+              {% endif %}
+              {% if product_1 != blank and product_2 != blank %}<span class="plus" aria-hidden="true">+</span>{% endif %}
+              {% if product_2 != blank %}
+                <span class="it">
+                  <span class="pimg" role="img" aria-label="{{ product_2.title }}">
+                    <img src="{{ product_2.featured_image | img_url: '200x' }}" alt="{{ product_2.title | escape }}" loading="lazy">
+                  </span>
+                  <span>{{ product_2.title | truncate: 40 }}</span>
+                </span>
+              {% endif %}
+            </div>
           </div>
-        </div>
-        <div class="body">
-          <h3>Kitchen essentials</h3>
-          <div class="cnt">3 products</div>
-          <p class="inc">Includes: Foaming Kitchen Cleaner, Dishwash Gel &amp; Tap Cleaner. Everything for a sparkling kitchen, no need to pick separately.</p>
-          <div class="prow"><strong>&#8377;499</strong><s>&#8377;897</s><em>Save &#8377;398</em></div>
-          <div class="fine">Inclusive of all taxes &middot; COD available</div>
-          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
-        </div>
-      </article>
-      <article class="glass combo">
-        <div class="tray">
-          <span class="save">You save &#8377;448</span>
-          <div class="stack">
-            <span class="it">
-              <span class="pimg p-laundry" role="img" aria-label="Purelane non-toxic laundry detergent"></span>
-              <span>Removes tough stains &amp; odour</span>
-            </span>
-            <span class="plus" aria-hidden="true">+</span>
-            <span class="it">
-              <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg></span>
-              <span>Softens &amp; freshens</span>
-            </span>
+          <div class="body">
+            <h3>{{ block.settings.combo_title }}</h3>
+            <div class="cnt">{{ product_count }} products</div>
+            <p class="inc">{{ block.settings.combo_desc }}</p>
+            <div class="prow"><strong>{{ block.settings.combo_price }}</strong><s>{{ block.settings.combo_compare_price }}</s><em>Save {{ block.settings.save_amount }}</em></div>
+            <div class="fine">Inclusive of all taxes &middot; COD available</div>
+            <a class="btn btn-ghost" href="{{ block.settings.combo_link }}">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
           </div>
-        </div>
-        <div class="body">
-          <h3>Laundry day</h3>
-          <div class="cnt">2 products</div>
-          <p class="inc">Laundry detergent plus a gentle fabric softener. Clothes stay fresh for longer without any harsh residue.</p>
-          <div class="prow"><strong>&#8377;349</strong><s>&#8377;598</s><em>Save &#8377;249</em></div>
-          <div class="fine">Inclusive of all taxes &middot; COD available</div>
-          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
-        </div>
-      </article>
-      <article class="glass combo">
-        <div class="tray">
-          <span class="save">You save &#8377;249</span>
-          <div class="stack">
-            <span class="it">
-              <span class="pimg p-floor" role="img" aria-label="Purelane natural herbal floor cleaner"></span>
-              <span>Safe for pets &amp; kids</span>
-            </span>
-            <span class="plus" aria-hidden="true">+</span>
-            <span class="it">
-              <span class="pimg p-toilet" role="img" aria-label="Purelane non-toxic toilet cleaner"></span>
-              <span>Kills 99.9% of germs</span>
-            </span>
-          </div>
-        </div>
-        <div class="body">
-          <h3>Bathroom &amp; floor</h3>
-          <div class="cnt">2 products</div>
-          <p class="inc">Floor cleaner and toilet cleaner together. Keeps the wettest rooms fresh without chemical fumes.</p>
-          <div class="prow"><strong>&#8377;349</strong><s>&#8377;598</s><em>Save &#8377;249</em></div>
-          <div class="fine">Inclusive of all taxes &middot; COD available</div>
-          <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
-        </div>
-      </article>
+        </article>
+      {% endfor %}
     </div>
     <div class="swipecue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>Swipe for more combos</div>
     <p class="railnote">Tapping "Shop bundle" opens the bundle picker with these products already added. You can still swap anything before you pay.</p>
@@ -100,9 +62,11 @@
       "settings": [
         { "type": "text", "id": "combo_title", "label": "Combo title", "default": "Kitchen essentials" },
         { "type": "text", "id": "combo_desc", "label": "Description", "default": "Everything for a sparkling kitchen." },
-        { "type": "text", "id": "combo_text", "label": "Save label", "default": "You save ₹398" },
+        { "type": "text", "id": "save_label", "label": "Save label", "default": "You save ₹398" },
+        { "type": "text", "id": "save_amount", "label": "Save amount", "default": "₹398" },
+        { "type": "text", "id": "flag", "label": "Flag", "default": "Most popular" },
         { "type": "text", "id": "combo_price", "label": "Combo price", "default": "₹499" },
-        { "type": "text", "id": "combo_compare_price", "label": "Compare at price" },
+        { "type": "text", "id": "combo_compare_price", "label": "Compare at price", "default": "₹897" },
         { "type": "text", "id": "combo_products", "label": "Product count label", "default": "3 products" },
         { "type": "url", "id": "combo_link", "label": "Link", "default": "/collections/all" },
         { "type": "product", "id": "product_1", "label": "Product 1" },

@@ -16,18 +16,18 @@
     </div>
 
     <div class="hero-copy">
-      <h1 class="d1 rv in">Clean<br>That<br><span class="lime">Lasts</span></h1>
+      <h1 class="d1 rv in">{{ section.settings.heading | default: 'Clean That Lasts' }}</h1>
       <div class="rule rv rv-d1">
         <i></i>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
         <i></i>
       </div>
-      <p class="lede rv rv-d2">Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.</p>
+      <p class="lede rv rv-d2">{{ section.settings.subheading | default: 'Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.' }}</p>
       <div class="hero-cta rv rv-d3">
-        <a class="btn btn-primary" href="#shop">Shop now
+        <a class="btn btn-primary" href="{{ section.settings.button_link | default: '/collections/all' }}">{{ section.settings.button_text | default: 'Shop now' }}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
         </a>
-        <a class="btn btn-ghost" href="#how">How it works</a>
+        <a class="btn btn-ghost" href="{{ section.settings.button_2_link | default: '#how' }}">{{ section.settings.button_2_text | default: 'How it works' }}</a>
       </div>
 
       <div class="badgestrip rv rv-d4">
@@ -59,7 +59,7 @@
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it." },
     { "type": "url", "id": "button_link", "label": "Primary button link", "default": "/collections/all" },
     { "type": "text", "id": "button_text", "label": "Primary button text", "default": "Shop now" },
-    { "type": "url", "id": "button_2_link", "label": "Secondary button link", "default": "/collections/all" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link", "default": "#how" },
     { "type": "text", "id": "button_2_text", "label": "Secondary button text", "default": "How it works" }
   ],
   "presets": [{ "name": "Hero Banner" }]

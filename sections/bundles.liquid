@@ -8,43 +8,52 @@
       </div>
     </div>
     <div class="tiers">
-      <article class="glass tier rv">
-        <span class="tag">Starter</span><div class="tierpix" aria-hidden="true"><span class="pimg p-combo2" role="img" aria-label="Purelane tap cleaner and kitchen cleaner combo pack"></span></div>
-        <div class="qty">2<small>Products</small></div>
-        <div class="price">₹349 <s>₹598</s></div>
-        <p class="body-s" style="font-size:12px">Flat ₹174 per product</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any two products</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
-        </ul>
-        <a class="btn btn-ghost" href="#shop">Build this box</a>
-      </article>
-      <article class="glass tier best rv rv-d2">
-        <span class="tag">Most popular</span><div class="tierpix" aria-hidden="true"><span class="pimg p-kitchen" role="img" aria-label="Purelane foaming kitchen cleaner"></span><span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover"></span><span class="pimg p-dish" role="img" aria-label="Purelane organic dishwash liquid gel"></span></div>
-        <div class="qty">3<small>Products</small></div>
-        <div class="price">₹499 <s>₹897</s></div>
-        <p class="body-s" style="font-size:12px">Flat ₹166 per product</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any three products</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Covers kitchen and laundry</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
-        </ul>
-        <a class="btn btn-primary" href="#shop">Build this box
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
-        </a>
-      </article>
-      <article class="glass tier rv rv-d3">
-        <span class="tag">Whole home</span><div class="tierpix five" aria-hidden="true"><span class="pimg p-kitchen" role="img" aria-label="Purelane foaming kitchen cleaner"></span><span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover"></span><span class="pimg p-floor" role="img" aria-label="Purelane natural herbal floor cleaner"></span><span class="pimg p-toilet" role="img" aria-label="Purelane non-toxic toilet cleaner"></span><span class="pimg p-laundry" role="img" aria-label="Purelane non-toxic laundry detergent"></span></div>
-        <div class="qty">5<small>Products</small></div>
-        <div class="price">₹799 <s>₹1495</s></div>
-        <p class="body-s" style="font-size:12px">Flat ₹160 per product</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any five products</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Every room in one order</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
-        </ul>
-        <a class="btn btn-ghost" href="#shop">Build this box</a>
-      </article>
+      {% for block in section.blocks %}
+        {% assign product_1 = block.settings.product_1 %}
+        {% assign product_2 = block.settings.product_2 %}
+        {% assign product_3 = block.settings.product_3 %}
+        {% assign product_count = 0 %}
+        {% if product_1 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+        {% if product_2 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+        {% if product_3 != blank %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+        <article class="glass tier rv{% if block.settings.featured %} best rv-d2{% endif %}{% if forloop.index == 3 %} rv-d3{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.tag != blank %}<span class="tag">{{ block.settings.tag }}</span>{% endif %}
+          <div class="tierpix{% if product_count == 5 %} five{% endif %}" aria-hidden="true">
+            {% if product_1 != blank %}
+              <span class="pimg" role="img" aria-label="{{ product_1.title }}">
+                <img src="{{ product_1.featured_image | img_url: '200x' }}" alt="{{ product_1.title | escape }}" loading="lazy">
+              </span>
+            {% endif %}
+            {% if product_2 != blank %}
+              <span class="pimg" role="img" aria-label="{{ product_2.title }}">
+                <img src="{{ product_2.featured_image | img_url: '200x' }}" alt="{{ product_2.title | escape }}" loading="lazy">
+              </span>
+            {% endif %}
+            {% if product_3 != blank %}
+              <span class="pimg" role="img" aria-label="{{ product_3.title }}">
+                <img src="{{ product_3.featured_image | img_url: '200x' }}" alt="{{ product_3.title | escape }}" loading="lazy">
+              </span>
+            {% endif %}
+          </div>
+          <div class="qty">{{ product_count }}<small>Products</small></div>
+          <div class="price">{{ block.settings.price }} <s>{{ block.settings.compare_price }}</s></div>
+          <p class="body-s" style="font-size:12px">{{ block.settings.per_product }}</p>
+          <ul>
+            {% if block.settings.feature_1 != blank %}
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_1 }}</li>
+            {% endif %}
+            {% if block.settings.feature_2 != blank %}
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_2 }}</li>
+            {% endif %}
+            {% if block.settings.feature_3 != blank %}
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ block.settings.feature_3 }}</li>
+            {% endif %}
+          </ul>
+          <a class="btn{% if block.settings.featured %} btn-primary{% else %} btn-ghost{% endif %}" href="{{ block.settings.link }}">Build this box
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+          </a>
+        </article>
+      {% endfor %}
     </div>
   </div>
 </section>
