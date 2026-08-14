@@ -1,0 +1,50 @@
+{
+  "name": "Purelane",
+  "theme_version": "1.0.0",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "Outfit"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "Inter"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_ink",
+      "label": "Background",
+      "default": "#f4f0fb"
+    },
+    {
+      "type": "color",
+      "id": "color_paper",
+      "label": "Text",
+      "default": "#241a3d"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#b8701c"
+    },
+    {
+      "type": "color",
+      "id": "color_brand",
+      "label": "Brand",
+      "default": "#4b3a8f"
+    }
+  ]
+}
